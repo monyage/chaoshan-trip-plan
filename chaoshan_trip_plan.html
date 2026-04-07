@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>潮汕48小时轻旅行攻略</title>
+  <meta name="description" content="一份适合自己查看的潮汕48小时轻旅行 HTML，兼顾颜值、移动端体验、时间轴、地点、美食与返程提醒。" />
+  <style>
+    :root {
+      --bg: #f7fbff;
+      --card: rgba(255,255,255,0.82);
+      --card-strong: rgba(255,255,255,0.92);
+      --text: #1a2335;
+      --muted: #617089;
+      --primary: #1677ff;
+      --primary-soft: rgba(22,119,255,0.09);
+      --sky: #58c3ff;
+      --teal: #24b7a8;
+      --orange: #ff8a65;
+      --gold: #ffb74d;
+      --pink: #ff6ea9;
+      --line: rgba(22,119,255,0.12);
+      --shadow: 0 18px 50px rgba(24, 45, 77, 0.12);
+      --shadow-soft: 0 10px 28px rgba(24, 45, 77, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --maxw: 920px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(88,195,255,0.22), transparent 24%),
+        radial-gradient(circle at 100% 0%, rgba(255,138,101,0.18), transparent 22%),
+        radial-gradient(circle at 100% 100%, rgba(36,183,168,0.14), transparent 25%),
+        linear-gradient(180deg, #edf8ff 0%, #f7fbff 38%, #f9fafc 100%);
+      line-height: 1.65;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(100%, var(--maxw));
+      margin: 0 auto;
+      padding: 16px 14px 42px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 22px 18px 20px;
+      border-radius: 30px;
+      color: #fff;
+      background:
+        linear-gradient(140deg, rgba(13,110,253,0.96), rgba(88,195,255,0.94) 54%, rgba(36,183,168,0.95));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 260px;
+      height: 260px;
+      right: -80px;
+      top: -90px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .hero::after {
+      width: 220px;
+      height: 220px;
+      left: -90px;
+      bottom: -110px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.16;
+      letter-spacing: .2px;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 15px;
+      opacity: .97;
+      max-width: 700px;
+    }
+
+    .hero-topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hero-card {
+      position: relative;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      opacity: .92;
+    }
+
+    .hero-card span {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 12px 0 2px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav a {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .section { margin-top: 16px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      padding: 18px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .grid,
+    .trip-grid,
+    .food-grid,
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .mini {
+      background: var(--card-strong);
+      border: 1px solid rgba(26,35,53,0.06);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mini h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .mini p, .mini ul {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mini ul { padding-left: 18px; }
+
+    .highlight {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .highlight-item {
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.84), rgba(255,255,255,0.72));
+      border: 1px solid rgba(22,119,255,0.08);
+    }
+
+    .highlight-item strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .highlight-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+      margin-top: 4px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), rgba(88,195,255,0.22));
+      border-radius: 20px;
+    }
+
+    .item {
+      position: relative;
+      padding: 0 0 16px 18px;
+    }
+
+    .item:last-child { padding-bottom: 0; }
+
+    .item::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 0 5px rgba(22,119,255,0.08);
+    }
+
+    .time {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(22,119,255,0.08);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .spot {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: .1px;
+    }
+
+    .desc {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(36,183,168,0.1);
+      color: var(--teal);
+    }
+
+    .chip.alt {
+      background: rgba(255,138,101,0.1);
+      color: #ef6c42;
+    }
+
+    .chip.gold {
+      background: rgba(255,183,77,0.16);
+      color: #b97807;
+    }
+
+    .note {
+      background: linear-gradient(135deg, rgba(22,119,255,0.08), rgba(88,195,255,0.06));
+      border: 1px solid rgba(22,119,255,0.08);
+      border-radius: 16px;
+      padding: 12px 13px;
+      color: #34506e;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .route-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .route-node {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(22,119,255,0.1);
+      font-size: 13px;
+      font-weight: 800;
+      color: #315784;
+    }
+
+    .food-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .icon {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, rgba(255,183,77,0.25), rgba(255,110,169,0.12));
+    }
+
+    .food-item h3 { margin: 0 0 4px; font-size: 15px; }
+    .food-item p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .map-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 10px;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(22,119,255,0.09);
+      border: 1px solid rgba(22,119,255,0.12);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .sticky {
+      position: sticky;
+      bottom: 10px;
+      z-index: 10;
+      margin-top: 18px;
+    }
+
+    .sticky-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(22,119,255,0.1);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      padding: 12px 14px;
+      backdrop-filter: blur(14px);
+    }
+
+    .sticky-inner div {
+      font-size: 13px;
+      color: #35526d;
+      line-height: 1.45;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--orange), #ff7043);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(255,112,67,0.26);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+      padding: 0 10px;
+    }
+
+    @media (min-width: 760px) {
+      .wrap { padding: 24px 20px 56px; }
+      .hero { padding: 30px 28px 26px; }
+      h1 { font-size: 38px; }
+      .grid,
+      .trip-grid,
+      .food-grid,
+      .tips-grid,
+      .highlight { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero" id="top">
+      <div class="label">🌊 潮汕 48 小时旅行攻略</div>
+      <h1>潮汕 48 小时轻旅行</h1>
+      <p>一份适合周末出发的潮汕小旅行手册：汕头老城的烟火感、南澳岛的治愈海风、再加上生腌、海鲜、牛肉火锅和鱼生，把这趟两天半安排得松弛又有记忆点。</p>
+      <div class="hero-topline">
+        <span class="pill">去程 HU7415｜4/10（周五）13:35 → 15:25</span>
+        <span class="pill">返程 HU7416｜4/12（周日）21:45 → 23:20</span>
+        <span class="pill">推荐住汕头万象城 / 龙眼南路</span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-card">
+          <b>旅行主题</b>
+          <span>老城烟火 × 海岛治愈 × 地道五味</span>
+        </div>
+        <div class="hero-card">
+          <b>行程风格</b>
+          <span>不赶路、重美食、适合拍照和转发</span>
+        </div>
+        <div class="hero-card">
+          <b>这趟重点</b>
+          <span>汕头老城 / 南澳环岛 / 牛肉火锅 / 鱼生收官</span>
+        </div>
+        <div class="hero-card">
+          <b>适合人群</b>
+          <span>第一次去潮汕、想玩得轻松又吃得完整的人</span>
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav" aria-label="快捷导航">
+      <a href="#summary">一眼看懂</a>
+      <a href="#day1">Day 1</a>
+      <a href="#day2">Day 2</a>
+      <a href="#day3">Day 3</a>
+      <a href="#food">吃什么</a>
+      <a href="#tips">注意事项</a>
+    </nav>
+
+    <section class="section" id="summary">
+      <div class="card">
+        <div class="section-title">
+          <h2>✨ 一眼看懂这趟旅行</h2>
+          <span class="badge">快速总览</span>
+        </div>
+        <div class="highlight">
+          <div class="highlight-item">
+            <strong>Day 1：先住汕头，傍晚直接进入旅行状态</strong>
+            <span>落地后不折腾，入住汕头市区，傍晚去小公园和西堤公园，晚上用生腌开胃，第一天就很有潮汕味。</span>
+          </div>
+          <div class="highlight-item">
+            <strong>Day 2：把整天留给南澳岛</strong>
+            <span>灯塔、风车山、青澳湾这条线最适合周末拍照和放空，晚上回汕头用一顿牛肉火锅做收尾，满足感很强。</span>
+          </div>
+          <div class="highlight-item">
+            <strong>Day 3：慢享晨光，不赶不慌</strong>
+            <span>早餐、补拍、咖啡、鱼生午餐、买手信、再从容去机场，这样返程日不会像“任务式收尾”。</span>
+          </div>
+          <div class="highlight-item">
+            <strong>整体节奏：轻松但不空</strong>
+            <span>每天核心活动控制在 1–2 个，避免暴走式打卡，更像一次真的休息到了的小旅行。</span>
+          </div>
+        </div>
+        <div class="trip-grid" style="margin-top:12px;">
+          <div class="mini">
+            <h3>交通和时间感</h3>
+            <ul>
+              <li>揭阳潮汕机场 ⇄ 汕头市区：约 30–60 分钟</li>
+              <li>汕头 ⇄ 南澳：建议包车 / 拼车，单程约 1.5 小时</li>
+              <li>返程日建议 17:30 左右从汕头出发去机场</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%8F%AD%E9%98%B3%E6%BD%AE%E6%B1%95%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA" target="_blank" rel="noopener">打开机场地图</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%B1%95%E5%A4%B4%E4%B8%87%E8%B1%A1%E5%9F%8E" target="_blank" rel="noopener">打开住宿片区地图</a>
+            </div>
+          </div>
+          <div class="mini">
+            <h3>住宿建议</h3>
+            <p>优先住 <strong>万象城 / 龙眼南路</strong> 一带，吃饭方便、打车方便、夜间也热闹；如果更偏爱老城氛围，也可以住小公园周边。</p>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%BE%99%E7%9C%BC%E5%8D%97%E8%B7%AF%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开龙眼南路地图</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%B0%8F%E5%85%AC%E5%9B%AD%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开小公园地图</a>
+            </div>
+          </div>
+        </div>
+        <div class="route-strip">
+          <span class="route-node">揭阳潮汕机场</span>
+          <span class="route-node">→ 汕头老城</span>
+          <span class="route-node">→ 南澳环岛</span>
+          <span class="route-node">→ 鱼生收官</span>
+          <span class="route-node">→ 返程机场</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="day1">
+      <div class="card">
+        <div class="section-title">
+          <h2>📅 Day 1｜4月10日 周五</h2>
+          <span class="badge">抵达 + 老城夜色</span>
+        </div>
+        <div class="timeline">
+          <div class="item">
+            <span class="time">15:00</span>
+            <h3 class="spot">抵达揭阳潮汕机场</h3>
+            <p class="desc">取行李后直接打车去汕头酒店，不建议第一天下午再塞太多点位，先进入“度假模式”更重要。</p>
+            <div class="meta">
+              <span class="chip">去程航班：HU7415</span>
+              <span class="chip">13:35 → 15:25</span>
+              <span class="chip alt">交通：机场 → 汕头</span>
+              <span class="chip alt">建议直接打车</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%8F%AD%E9%98%B3%E6%BD%AE%E6%B1%95%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA" target="_blank" rel="noopener">打开地图</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">16:30</span>
+            <h3 class="spot">入住后，去小公园开埠区慢慢逛</h3>
+            <p class="desc">骑楼、中山纪念亭、“汕头”字墙都在这片，适合第一天做轻量级散步，照片也比较容易出片。</p>
+            <ul class="list">
+              <li>关键词：骑楼街景、复古感、开埠城市氛围</li>
+              <li>建议穿舒服一点的鞋，这段最适合边走边拍</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%B0%8F%E5%85%AC%E5%9B%AD%E5%BC%80%E5%9F%A0%E5%8C%BA%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开地图</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">17:30</span>
+            <h3 class="spot">步行去西堤公园看日落</h3>
+            <p class="desc">看礐石大桥和韩江边的蓝调时刻，是汕头很舒服的一面，不用硬打卡，坐一会儿也值得。</p>
+            <div class="meta">
+              <span class="chip gold">推荐拍照时间</span>
+              <span class="chip">轻松感最强的一段</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E8%A5%BF%E5%A0%A4%E5%85%AC%E5%9B%AD%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开地图</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">18:30</span>
+            <h3 class="spot">晚餐｜富苑饮食（龙眼南路总店）</h3>
+            <p class="desc">第一顿安排生腌很有仪式感，但别点太猛，搭白粥是更稳妥的吃法。</p>
+            <ul class="list">
+              <li>推荐：生腌膏蟹、腌血蛤、白粥</li>
+              <li>预算：人均约 ¥100–120</li>
+              <li>周五晚可能小排队，建议尽量提早一点到</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%AF%8C%E8%8B%91%E9%A5%AE%E9%A3%9F%20%E9%BE%99%E7%9C%BC%E5%8D%97%E8%B7%AF%E6%80%BB%E5%BA%97" target="_blank" rel="noopener">打开地图</a>
+            </div>
+            <div class="note">如果同行朋友不太能吃生冷，可以点一些更稳的熟食，不必为了“必须体验”硬上过量生腌。</div>
+          </div>
+          <div class="item">
+            <span class="time">20:00</span>
+            <h3 class="spot">夜宵可选｜阿群甘草水果 / 直接回酒店休息</h3>
+            <p class="desc">第一晚不要把行程拉太满。最好的收尾方式，往往是吃一点甜口小食，然后早点回去睡，把精力留给第二天南澳。</p>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%98%BF%E7%BE%A4%E7%94%98%E8%8D%89%E6%B0%B4%E6%9E%9C%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开地图</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="day2">
+      <div class="card">
+        <div class="section-title">
+          <h2>📅 Day 2｜4月11日 周六</h2>
+          <span class="badge">南澳岛治愈环岛一日</span>
+        </div>
+        <div class="timeline">
+          <div class="item">
+            <span class="time">08:00</span>
+            <h3 class="spot">酒店出发去南澳岛</h3>
+            <p class="desc">周六去南澳的人会更多，早点出发就是最有效的优化。建议提前约好包车或拼车，别当天临时找。</p>
+            <div class="meta">
+              <span class="chip alt">周末尽量早出发</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%8D%97%E6%BE%B3%E5%B2%9B" target="_blank" rel="noopener">打开南澳地图</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">09:30–16:30</span>
+            <h3 class="spot">环岛精华路线</h3>
+            <p class="desc">把南澳当成“看海+放空+拍照”的一天，不用追求每个点都久留，顺着节奏走就好。</p>
+            <ul class="list">
+              <li>长山尾灯塔</li>
+              <li>钱澳湾灯塔</li>
+              <li>三囱崖灯塔</li>
+              <li>风车山</li>
+              <li>青澳湾</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%95%BF%E5%B1%B1%E5%B0%BE%E7%81%AF%E5%A1%94%20%E5%8D%97%E6%BE%B3" target="_blank" rel="noopener">长山尾灯塔</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%92%B1%E6%BE%B3%E6%B9%BE%E7%81%AF%E5%A1%94%20%E5%8D%97%E6%BE%B3" target="_blank" rel="noopener">钱澳湾灯塔</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E4%B8%89%E5%9B%B1%E5%B4%96%E7%81%AF%E5%A1%94%20%E5%8D%97%E6%BE%B3" target="_blank" rel="noopener">三囱崖灯塔</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%A3%8E%E8%BD%A6%E5%B1%B1%20%E5%8D%97%E6%BE%B3" target="_blank" rel="noopener">风车山</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E9%9D%92%E6%BE%B3%E6%B9%BE%20%E5%8D%97%E6%BE%B3" target="_blank" rel="noopener">青澳湾</a>
+            </div>
+            <div class="note">如果当天风大或天气一般，可以少跑 1–2 个点，把更多时间留给青澳湾和沿途停靠，不必强行打满清单。</div>
+          </div>
+          <div class="item">
+            <span class="time">12:30</span>
+            <h3 class="spot">午餐｜青澳湾排档</h3>
+            <p class="desc">海边午餐更适合吃清爽一点，避免下午太撑、太油。</p>
+            <ul class="list">
+              <li>可选：许大姐的菜 / 海味馆</li>
+              <li>推荐：清蒸鱼、椒盐虾、紫菜炒饭</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E8%AE%B8%E5%A4%A7%E5%A7%90%E7%9A%84%E8%8F%9C%20%E9%9D%92%E6%BE%B3%E6%B9%BE" target="_blank" rel="noopener">许大姐的菜</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%B5%B7%E5%91%B3%E9%A6%86%20%E9%9D%92%E6%BE%B3%E6%B9%BE" target="_blank" rel="noopener">海味馆</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">17:00</span>
+            <h3 class="spot">返程回汕头</h3>
+            <p class="desc">回到市区先整理一下、洗把脸，再出门吃晚饭，这样晚上体感会好很多。</p>
+          </div>
+          <div class="item">
+            <span class="time">19:00</span>
+            <h3 class="spot">晚餐｜杏花吴记牛肉火锅（龙眼南路）</h3>
+            <p class="desc">这顿是整趟的满足感担当。跑了一天海边之后，回城吃牛肉火锅，节奏上非常顺。</p>
+            <ul class="list">
+              <li>推荐：吊龙、胸口油、牛丸</li>
+              <li>蘸料建议以沙茶为主，不用调太复杂</li>
+              <li>周六晚上是高峰，建议提前确认排队情况</li>
+            </ul>
+            <div class="meta">
+              <span class="chip gold">当天重头戏</span>
+              <span class="chip">适合做 Day 2 收尾</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%9D%8F%E8%8A%B1%E5%90%B4%E8%AE%B0%E7%89%9B%E8%82%89%E7%81%AB%E9%94%85%20%E9%BE%99%E7%9C%BC%E5%8D%97%E8%B7%AF%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">打开地图</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="day3">
+      <div class="card">
+        <div class="section-title">
+          <h2>📅 Day 3｜4月12日 周日</h2>
+          <span class="badge">慢享晨光 + 鱼生收官 + 返程</span>
+        </div>
+        <div class="timeline">
+          <div class="item">
+            <span class="time">08:00–09:00</span>
+            <h3 class="spot">早餐｜老姿娘粿汁 / 小吴肠粉</h3>
+            <p class="desc">返程日的早餐不用太复杂，找一家顺路的小店，吃点热乎的，整个人会很舒服。</p>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E8%80%81%E5%A7%BF%E5%A8%98%E7%B2%BF%E6%B1%81%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">老姿娘粿汁</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%B0%8F%E5%90%B4%E8%82%A0%E7%B2%89%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">小吴肠粉</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">09:30–11:00</span>
+            <h3 class="spot">自由活动｜小公园补拍 / 旧物仓咖啡</h3>
+            <p class="desc">如果前两天拍照没拍够，可以再回老城；如果想松弛一点，就去咖啡馆坐坐，让旅行尾声更柔和。</p>
+            <div class="meta">
+              <span class="chip">老城补拍</span>
+              <span class="chip alt">文艺小憩</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E5%B0%8F%E5%85%AC%E5%9B%AD%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">小公园</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%97%A7%E7%89%A9%E4%BB%93%E5%92%96%E5%95%A1%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">旧物仓咖啡</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">11:30</span>
+            <h3 class="spot">午餐｜草鱼先生·潮州鱼生（新厦花园店）</h3>
+            <p class="desc">最后一顿安排鱼生，很适合作为这趟潮汕小旅行的收尾，记忆点很强。</p>
+            <ul class="list">
+              <li>推荐：草鱼鱼生、鱼泡、白粥</li>
+              <li>预算：人均约 ¥90–120</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E8%8D%89%E9%B1%BC%E5%85%88%E7%94%9F%C2%B7%E6%BD%AE%E5%B7%9E%E9%B1%BC%E7%94%9F%20%E6%96%B0%E5%8E%A6%E8%8A%B1%E5%9B%AD%E5%BA%97" target="_blank" rel="noopener">打开地图</a>
+            </div>
+            <div class="note">如果同行的人对生食接受度不高，这顿也可以替换成更稳妥的潮汕小炒或海鲜，不影响整体节奏。</div>
+          </div>
+          <div class="item">
+            <span class="time">13:00</span>
+            <h3 class="spot">回酒店取行李</h3>
+            <p class="desc">建议这时就开始整理返程物品，证件、充电宝、手信提前归位，后面就会非常从容。</p>
+          </div>
+          <div class="item">
+            <span class="time">14:00–17:00</span>
+            <h3 class="spot">休整 + 买手信</h3>
+            <p class="desc">可以在万象城附近慢慢逛、买伴手礼，或者回酒店补个觉。返程日前留一点“空白时间”，比继续塞景点要更值。</p>
+            <ul class="list">
+              <li>建议买：老妈宫粽球、南糖、适合打包的干货类手信</li>
+              <li>不建议临走大量买需冷藏、液体或不方便带上飞机的食品</li>
+            </ul>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%B1%95%E5%A4%B4%E4%B8%87%E8%B1%A1%E5%9F%8E" target="_blank" rel="noopener">万象城</a>
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E8%80%81%E5%A6%88%E5%AE%AB%E7%B2%BD%E7%90%83%20%E6%B1%95%E5%A4%B4" target="_blank" rel="noopener">老妈宫粽球</a>
+            </div>
+          </div>
+          <div class="item">
+            <span class="time">17:30</span>
+            <h3 class="spot">打车前往揭阳潮汕机场</h3>
+            <p class="desc">按 17:30 左右出发来计划比较稳，18:30 前抵达机场会很舒服，不需要把返程搞得像冲刺。返程航班为 HU7416，21:45 起飞，23:20 抵达。</p>
+            <div class="meta">
+              <span class="chip gold">返程建议时间</span>
+              <span class="chip">HU7416 · 21:45 → 23:20</span>
+            </div>
+            <div class="map-actions">
+              <a class="map-btn" href="https://uri.amap.com/search?keyword=%E6%8F%AD%E9%98%B3%E6%BD%AE%E6%B1%95%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA" target="_blank" rel="noopener">打开机场地图</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="food">
+      <div class="card">
+        <div class="section-title">
+          <h2>🍲 这趟到底吃什么</h2>
+          <span class="badge">美食重点</span>
+        </div>
+        <div class="food-grid">
+          <div class="mini food-item">
+            <div class="icon">🦀</div>
+            <div>
+              <h3>生腌</h3>
+              <p>第一晚安排最合理，仪式感强，也最像“刚到潮汕”的开场方式。记住一句话：点精不点多。</p>
+            </div>
+          </div>
+          <div class="mini food-item">
+            <div class="icon">🦐</div>
+            <div>
+              <h3>南澳海鲜</h3>
+              <p>中午适合吃得清爽一点，清蒸鱼、虾、炒饭都很适合，不会影响下午状态。</p>
+            </div>
+          </div>
+          <div class="mini food-item">
+            <div class="icon">🥩</div>
+            <div>
+              <h3>牛肉火锅</h3>
+              <p>第二晚压轴最舒服。跑完一天海边回来，来一顿牛肉火锅，幸福感会直接拉满。</p>
+            </div>
+          </div>
+          <div class="mini food-item">
+            <div class="icon">🐟</div>
+            <div>
+              <h3>鱼生收官</h3>
+              <p>最后一天午餐安排鱼生很聪明，既有潮汕辨识度，也让整趟旅行的尾声很完整。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tips">
+      <div class="card">
+        <div class="section-title">
+          <h2>🎒 出行提醒</h2>
+          <span class="badge">临行前看一眼</span>
+        </div>
+        <div class="tips-grid">
+          <div class="mini">
+            <h3>关于节奏</h3>
+            <ul>
+              <li>这份攻略的核心不是“打卡越多越值”，而是舒服地体验潮汕</li>
+              <li>每天只安排 1–2 个重点，留点空白时间，旅行感会更完整</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>关于吃</h3>
+            <ul>
+              <li>潮汕适合少量多餐，别每顿都点满桌</li>
+              <li>生腌、海鲜、鱼生可以分开体验，身体会更轻松</li>
+              <li>白粥真的是万能缓冲器</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>关于南澳</h3>
+            <ul>
+              <li>建议带帽子、墨镜、防晒，海边风大日晒也更直接</li>
+              <li>如果天气一般，不必执着跑满所有灯塔点</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>关于返程</h3>
+            <ul>
+              <li>返程是 21:15，但不建议拖到很晚才出发</li>
+              <li>按 17:30 左右离开汕头最稳</li>
+              <li>手信尽量选干货类、好打包的</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sticky">
+      <div class="sticky-inner">
+        <div><strong>返程提醒：</strong><br>4 月 12 日建议 17:30 左右从汕头出发去机场，整趟会从容很多。</div>
+        <a class="btn" href="#top">回到顶部</a>
+      </div>
+    </div>
+
+    <p class="footer">这版已经加入每个关键地点的“打开地图”按钮，适合在手机上直接查看和使用。后续还可以继续加：店铺电话、预算模块、可打印 PDF 样式、封面大图。</p>
+  </main>
+</body>
+</html>
